@@ -62,11 +62,22 @@ dir="\$1"
 name="\${dir##*/}"
 name="\${name%.*}"
 
+if [ ! -d "\$dir/pics" ]; then
+    ln -s /opt/retropie/emulators/daphne/pics \$dir/pics
+fi
+
+if [ ! -d "\$dir/sound" ]; then
+    ln -s /opt/retropie/emulators/daphne/sound \$dir/sound
+fi
+
 if [[ -f "\$dir/\$name.commands" ]]; then
     params=\$(<"\$dir/\$name.commands")
 fi
 
-"$md_inst/daphne.bin" "\$name" vldp -nohwaccel -framefile "\$dir/\$name.txt" -homedir "$md_inst" -fullscreen \$params
+export PATH=$md_inst:\$PATH
+cd \$dir
+daphne.bin \$params
+
 _EOF_
     chmod +x "$md_inst/daphne.sh"
 
