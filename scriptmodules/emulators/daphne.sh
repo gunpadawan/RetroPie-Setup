@@ -17,20 +17,22 @@ rp_module_section="opt"
 rp_module_flags="!x86 !mali"
 
 function depends_daphne() {
-    getDepends libsdl1.2-dev libvorbis-dev libglew-dev zlib1g-dev
+    getDepends libsdl1.2-dev libsdl-image1.2-dev libsdl-ttf2.0-dev libvorbis-dev libglew-dev zlib1g-dev
 }
 
 function sources_daphne() {
-    gitPullOrClone "$md_build" https://github.com/RetroPie/daphne-emu.git retropie
+    gitPullOrClone "$md_build" https://github.com/gunpadawan/daphne-emu.git retropie
 }
 
 function build_daphne() {
     cd src/vldp2
     ./configure
-    make -f Makefile.rp
-    cd ..
+    make objs -f Makefile.rp
+    cd ../game/singe
+    make objs -f Makefile.rp
+    cd ../..
     ln -sf Makefile.vars.rp Makefile.vars
-    make STATIC_VLDP=1
+    make STATIC_VLDP=1 STATIC_SINGE=1
 }
 
 function install_daphne() {
