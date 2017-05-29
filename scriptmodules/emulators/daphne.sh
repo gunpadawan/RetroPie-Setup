@@ -74,6 +74,7 @@ if [[ -f "\$dir/\$name.commands" ]]; then
     params=\$(<"\$dir/\$name.commands")
 fi
 
+cp -f $md_inst/dapinput.ini \$dir/
 export PATH=$md_inst:\$PATH
 cd \$dir
 daphne.bin \$params
